@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">My Routine</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_copy">Copy Items</string>
+    <string name="action_stopPaste">Stop Pasting</string>
+    <string name="action_clearData">Clear All Data</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_exit">Exit</string>
+    <string name="textButtonPrev">prev</string>
+    <string name="textButtonNext">next</string>
+    <string name="title_activity_add_to_list">Edit</string>
+    <string name="title_activity_color_choose">Choose Color</string>
+
+</resources>
