@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.Date;
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -112,14 +111,14 @@ public class MainActivity extends Activity {
 	}
 	
 	@Override
-	public void onPause(){
+	public void onBackPressed(){
 		Log.i("saving", "Saving Data");
 		if(dataNeedToBeSaved){
-			//Toast.makeText(this, "Saving Data", Toast.LENGTH_LONG).show();
-			saveData();
-			dataNeedToBeSaved=false;
+			trySaveOnExit();
 		}
-		super.onPause();
+		else{
+			super.onBackPressed();
+		}
 	}
 	
 	
@@ -338,6 +337,7 @@ public class MainActivity extends Activity {
 								//copiedRoutineItem can never be null
 								items[box_x][box_y]=copiedRoutineItem;
 								postInvalidate();
+								dataNeedToBeSaved=true;
 							}
 							else{
 								Intent intent=new Intent(getContext(),AddToListActivity.class);
@@ -375,5 +375,29 @@ public class MainActivity extends Activity {
 					}
 
 				}).setNegativeButton("No", null).show();
+	}
+	
+	private void trySaveOnExit() {
+		new AlertDialog.Builder(this)
+		.setIcon(android.R.drawable.ic_dialog_alert)
+		.setTitle("Save Before Exit")
+		.setMessage("Some data have been changed. Do you want to save?")
+		.setPositiveButton("Save",
+				new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						saveData();
+						finish();
+					}
+
+				}).setNegativeButton("Don't Save",
+						new DialogInterface.OnClickListener() {
+							
+							@Override
+							public void onClick(DialogInterface dialog, int which) {
+								//finish without exit
+								finish();
+							}
+						}).show();
 	}
 }
