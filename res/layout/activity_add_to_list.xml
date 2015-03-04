@@ -18,10 +18,10 @@
 
         <Button
             android:id="@+id/buttonSave"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:text="Set" />
+            android:text="Save" />
 
         <TextView
             android:id="@+id/textViewCourseId"
@@ -34,6 +34,7 @@
             android:id="@+id/editTextCourseId"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:hint="Enter Course ID"
             android:ems="10" >
 
             <requestFocus />
@@ -50,6 +51,7 @@
             android:id="@+id/editTextCourseName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:hint="Enter Course Name"
             android:ems="10" />
 
         <TextView
@@ -63,6 +65,7 @@
             android:id="@+id/editTextTeachers"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:hint="Enter Teachers' Names"
             android:ems="10" />
 
         <Button

@@ -27,6 +27,8 @@ public class AddToListActivity extends Activity {
 	Intent intent;
 	
 	int buttonColorConstant;
+
+	RoutineItem item;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +57,10 @@ public class AddToListActivity extends Activity {
 		final int day=intent.getIntExtra("day",0);
 		final int period=intent.getIntExtra("period", 0);
 		
-		final RoutineItem item=MainActivity.items[day][period];
+		saveButton.setText("Save ("+
+				MainActivity.days[day-1]+","+MainActivity.times[period-1]+")");
+		
+		item=MainActivity.items[day][period];
 		
 		buttonColorConstant=item.getColorConstant();
 		colorChooseButton.setBackgroundColor(buttonColorConstant);
@@ -73,6 +78,7 @@ public class AddToListActivity extends Activity {
 				item.setTeachers(etTeachers.getText().toString());
 				item.setColorConstant(buttonColorConstant);
 				
+				MainActivity.items[day][period]=item;
 				MainActivity.dataNeedToBeSaved=true;
 
 				finish();
@@ -83,10 +89,13 @@ public class AddToListActivity extends Activity {
 			
 			@Override
 			public void onClick(View v) {
-				etCourseId.setText("");
-				etCourseName.setText("");
-				etTeachers.setText("");
-				colorChooseButton.setBackgroundColor(RoutineItem.defaultColorConstant);
+				item=new RoutineItem();//refering to new address
+				buttonColorConstant=item.getColorConstant();
+				colorChooseButton.setBackgroundColor(buttonColorConstant);
+				
+				etCourseId.setText(item.getCourseID());
+				etCourseName.setText(item.getCourseName());
+				etTeachers.setText(item.getTeachers());
 				
 				//Toast.makeText(getBaseContext(), "Cleared", Toast.LENGTH_SHORT).show();
 			}

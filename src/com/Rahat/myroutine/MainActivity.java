@@ -6,6 +6,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.Date;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -19,6 +21,7 @@ import android.graphics.Rect;
 import android.graphics.Paint.Style;
 import android.os.Bundle;
 import android.os.Environment;
+import android.text.format.DateFormat;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Menu;
@@ -42,6 +45,9 @@ public class MainActivity extends Activity {
 	private boolean pasteMode;
 	
 	File storageFile;
+	
+	static final String[] days={"SAT","SUN","MON","TUE","WED","THU","FRI"};
+	static final String[] times={"8:00","9:00","10:00","11:00","12:00","02:00","4:00"};
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -211,9 +217,6 @@ public class MainActivity extends Activity {
 		static final int total_timeGaps=7;//day,8,9,10,11,12,2
 		private int box_width;
 		private int box_height;
-		
-		private String[] days={"SAT","SUN","MON","TUE","WED","THU","FRI"};
-		private String[] times={"8:00","9:00","10:00","11:00","12:00","02:00","4:00"};
 
 	    public DrawView(Context context) {
 	        super(context);
@@ -264,11 +267,18 @@ public class MainActivity extends Activity {
 	    	paint.setAntiAlias(true);
 	    	paint.setSubpixelText(true);
 	    	paint.setStyle(Style.FILL);//for nice font
-
+	    	
+	    	Date date=new Date();
+			String today=DateFormat.format("E", date).toString();//generally of 3 chars
 	    	for(int day=0;day<total_days-1;day++){
 	    		int x=boxes[day+1][0].centerX()-20;
 	    		int y=boxes[day+1][0].centerY();
-	    		canvas.drawText(days[day], x, y, paint);
+	    		
+	    		String dayName=days[day];
+	    		if(days[day].equalsIgnoreCase(today)){
+	    			dayName="< "+dayName+" >";
+	    		}
+	    		canvas.drawText(dayName, x, y, paint);
 	    	}
 	    	
 	    	for(int gap=0;gap<total_timeGaps-1;gap++){
@@ -311,15 +321,18 @@ public class MainActivity extends Activity {
 						float y=event.getY();
 						
 						int box_y=(int) (x/box_width);//for landscape
-						int box_x=(int) (y/box_height);//forlandscape
+						int box_x=(int) (y/box_height);//for landscape
 						
-						if(box_x<total_days && box_y<total_timeGaps)
+						if(box_x==0 || box_y==0)//in the day and time label position
+							return true;
+						
+						else if(box_x<total_days && box_y<total_timeGaps)
 						{
 							if(copyMode){
 								copiedRoutineItem=items[box_x][box_y];
 								copyMode=false;
 								pasteMode=true;
-								showToast("Copied.\nNow Touch where to paste.");
+								showToast("Copied.\nNow Touch Where To Paste.");
 							}
 							else if(pasteMode){
 								//copiedRoutineItem can never be null
@@ -339,7 +352,7 @@ public class MainActivity extends Activity {
 						//Toast.makeText(getContext(), Integer.toString(box_x)+" "+
 						//Integer.toString(box_y), Toast.LENGTH_SHORT).show();
 					}
-					return false;
+					return true;
 				}
 			});
 	    }
