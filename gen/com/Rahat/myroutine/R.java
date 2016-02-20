@@ -8,6 +8,34 @@
 package com.Rahat.myroutine;
 
 public final class R {
+    public static final class array {
+        public static final int centeringOffsetValueArray=0x7f080001;
+        public static final int lineGapValueArray=0x7f080002;
+        /**   
+        <item>31</item>
+        <item>32</item>
+        <item>33</item>
+        <item>34</item>
+        <item>35</item>
+        <item>36</item>
+        <item>37</item>
+        <item>38</item>
+        <item>39</item>
+        <item>40</item>
+        <item>41</item>
+        <item>42</item>
+        <item>43</item>
+        <item>44</item>
+        <item>45</item>
+        <item>46</item>
+        <item>47</item>
+        <item>48</item>
+        <item>49</item>
+        <item>50</item>
+        
+         */
+        public static final int textSizeTextsArray=0x7f080000;
+    }
     public static final class attr {
     }
     public static final class dimen {
@@ -18,59 +46,85 @@ public final class R {
          would include 7" and 10" devices in landscape (~960dp and ~1280dp respectively).
     
          */
-        public static final int activity_horizontal_margin=0x7f040000;
-        public static final int activity_vertical_margin=0x7f040001;
+        public static final int activity_horizontal_margin=0x7f050000;
+        public static final int activity_vertical_margin=0x7f050001;
     }
     public static final class drawable {
         public static final int ic_launcher=0x7f020000;
     }
     public static final class id {
-        public static final int LinearLayout1=0x7f080001;
-        public static final int action_clearData=0x7f080013;
-        public static final int action_copy=0x7f080011;
-        public static final int action_exit=0x7f080015;
-        public static final int action_settings=0x7f080014;
-        public static final int action_stopPaste=0x7f080012;
-        public static final int buttonChoose=0x7f080009;
-        public static final int buttonClear=0x7f08000a;
-        public static final int buttonNext=0x7f08000e;
-        public static final int buttonPrev=0x7f08000c;
-        public static final int buttonSave=0x7f080002;
-        public static final int editTextCourseId=0x7f080004;
-        public static final int editTextCourseName=0x7f080006;
-        public static final int editTextTeachers=0x7f080008;
-        public static final int listView=0x7f08000f;
-        public static final int listViewColorList=0x7f08000b;
-        public static final int scrollView=0x7f080000;
-        public static final int textViewColorName=0x7f080010;
-        public static final int textViewCourseId=0x7f080003;
-        public static final int textViewCourseName=0x7f080005;
-        public static final int textViewDay=0x7f08000d;
-        public static final int textViewTeachers=0x7f080007;
+        public static final int LinearLayout1=0x7f0b0001;
+        public static final int action_chooseCustomColor=0x7f0b0018;
+        public static final int action_clearData=0x7f0b001b;
+        public static final int action_copy=0x7f0b0019;
+        public static final int action_exit=0x7f0b001d;
+        public static final int action_settings=0x7f0b001c;
+        public static final int action_stopPaste=0x7f0b001a;
+        public static final int buttonChoose=0x7f0b000b;
+        public static final int buttonClear=0x7f0b000d;
+        public static final int buttonSave=0x7f0b0002;
+        public static final int button_saveCustomColor=0x7f0b0016;
+        public static final int editTextCourseId=0x7f0b0005;
+        public static final int editTextCourseName=0x7f0b0007;
+        public static final int editTextTeachers=0x7f0b0009;
+        public static final int listViewColorList=0x7f0b000e;
+        public static final int scrollView=0x7f0b0000;
+        public static final int seekBarBlue=0x7f0b0015;
+        public static final int seekBarGreen=0x7f0b0013;
+        public static final int seekBarRed=0x7f0b0011;
+        public static final int space1=0x7f0b0003;
+        public static final int space2=0x7f0b000a;
+        public static final int space3=0x7f0b000c;
+        public static final int textViewBlue=0x7f0b0014;
+        public static final int textViewColorName=0x7f0b0017;
+        public static final int textViewCourseId=0x7f0b0004;
+        public static final int textViewCourseName=0x7f0b0006;
+        public static final int textViewGreen=0x7f0b0012;
+        public static final int textViewRed=0x7f0b0010;
+        public static final int textViewTeachers=0x7f0b0008;
+        public static final int view_colorView=0x7f0b000f;
+    }
+    public static final class integer {
+        public static final int centeringXOffsetMin=0x7f060003;
+        public static final int centeringYOffsetMin=0x7f060004;
+        public static final int defaultTextSize=0x7f060002;
+        public static final int maxTextSize=0x7f060001;
+        public static final int minTextSize=0x7f060000;
+        public static final int textLineGapMin=0x7f060005;
     }
     public static final class layout {
         public static final int activity_add_to_list=0x7f030000;
         public static final int activity_color_choose=0x7f030001;
-        public static final int activity_main=0x7f030002;
-        public static final int list_item=0x7f030003;
+        public static final int activity_custom_color_chooser=0x7f030002;
+        public static final int activity_main=0x7f030003;
+        public static final int list_item=0x7f030004;
     }
     public static final class menu {
-        public static final int add_to_list=0x7f070000;
-        public static final int color_choose=0x7f070001;
-        public static final int main=0x7f070002;
+        public static final int add_to_list=0x7f0a0000;
+        public static final int color_choose=0x7f0a0001;
+        public static final int custom_color_chooser=0x7f0a0002;
+        public static final int main=0x7f0a0003;
     }
     public static final class string {
-        public static final int action_clearData=0x7f050004;
-        public static final int action_copy=0x7f050002;
-        public static final int action_exit=0x7f050006;
-        public static final int action_settings=0x7f050005;
-        public static final int action_stopPaste=0x7f050003;
-        public static final int app_name=0x7f050000;
-        public static final int hello_world=0x7f050001;
-        public static final int textButtonNext=0x7f050008;
-        public static final int textButtonPrev=0x7f050007;
-        public static final int title_activity_add_to_list=0x7f050009;
-        public static final int title_activity_color_choose=0x7f05000a;
+        public static final int action_chooseCustomColor=0x7f070007;
+        public static final int action_clearData=0x7f070004;
+        public static final int action_copy=0x7f070002;
+        public static final int action_exit=0x7f070006;
+        public static final int action_settings=0x7f070005;
+        public static final int action_stopPaste=0x7f070003;
+        public static final int app_name=0x7f070000;
+        public static final int buttonText_customColor=0x7f07000c;
+        public static final int centeringX_title=0x7f070010;
+        public static final int centeringY_title=0x7f070011;
+        public static final int hello_world=0x7f070001;
+        public static final int textButtonNext=0x7f070009;
+        public static final int textButtonPrev=0x7f070008;
+        public static final int textLineGap_title=0x7f070012;
+        public static final int text_size_title=0x7f07000f;
+        public static final int title_activity_add_to_list=0x7f07000a;
+        public static final int title_activity_color_choose=0x7f07000b;
+        public static final int title_activity_custom_color_chooser=0x7f07000d;
+        public static final int title_activity_settings=0x7f07000e;
     }
     public static final class style {
         /** 
@@ -94,10 +148,13 @@ public final class R {
     
  API 14 theme customizations can go here. 
          */
-        public static final int AppBaseTheme=0x7f060000;
+        public static final int AppBaseTheme=0x7f090000;
         /**  Application theme. 
  All customizations that are NOT specific to a particular API-level can go here. 
          */
-        public static final int AppTheme=0x7f060001;
+        public static final int AppTheme=0x7f090001;
+    }
+    public static final class xml {
+        public static final int preferences=0x7f040000;
     }
 }

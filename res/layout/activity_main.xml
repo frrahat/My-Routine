@@ -10,36 +10,4 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.Rahat.myroutine.MainActivity" >
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
-
-        <Button
-            android:id="@+id/buttonPrev"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/textButtonPrev" />
-
-        <TextView
-            android:id="@+id/textViewDay"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
-
-        <Button
-            android:id="@+id/buttonNext"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/textButtonNext" />
-
-    </LinearLayout>
-
-    <ListView
-        android:id="@+id/listView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
-    </ListView>
-
 </LinearLayout>

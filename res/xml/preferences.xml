@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+    
+    <ListPreference
+        android:defaultValue="@integer/defaultTextSize"
+        android:dialogTitle="@string/text_size_title"
+        android:entries="@array/textSizeTextsArray"
+        android:entryValues="@array/textSizeTextsArray"
+        android:key="textSize"
+        android:title="@string/text_size_title" />
+    
+    <ListPreference
+        android:defaultValue="@integer/centeringXOffsetMin"
+        android:dialogTitle="@string/centeringX_title"
+        android:entries="@array/centeringOffsetValueArray"
+        android:entryValues="@array/centeringOffsetValueArray"
+        android:key="centeringXOffset"
+        android:title="@string/centeringX_title" />
+    
+    <ListPreference
+        android:defaultValue="@integer/centeringYOffsetMin"
+        android:dialogTitle="@string/centeringY_title"
+        android:entries="@array/centeringOffsetValueArray"
+        android:entryValues="@array/centeringOffsetValueArray"
+        android:key="centeringYOffset"
+        android:title="@string/centeringY_title" />
+    
+    <ListPreference
+        android:defaultValue="@integer/textLineGapMin"
+        android:dialogTitle="@string/textLineGap_title"
+        android:entries="@array/lineGapValueArray"
+        android:entryValues="@array/lineGapValueArray"
+        android:key="textLineGap"
+        android:title="@string/textLineGap_title" />
+    
+</PreferenceScreen>

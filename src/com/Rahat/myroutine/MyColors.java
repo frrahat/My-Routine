@@ -13,25 +13,26 @@ import android.graphics.Color;
 
 public class MyColors {
 	private static int[] colors={
-			Color.BLACK,
 			Color.WHITE,
 			Color.CYAN,
 			Color.GRAY,
 			Color.GREEN,
 			Color.MAGENTA,
 			Color.YELLOW,
-			Color.RED};
+			Color.RED,
+			Color.BLUE,
+			};
 	
 	
 	private static String[] colorNames={
-			"BLACK",
 			"WHITE",
 			"CYAN",
 			"GRAY",
 			"GREEN",
 			"MAGENTA",
 			"YELLOW",
-			"RED"};
+			"RED",
+			"BLUE"};
 
 	
 	public static int[] getColors()

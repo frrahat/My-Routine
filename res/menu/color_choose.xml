@@ -1,5 +1,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.Rahat.myroutine.ColorChooseActivity" >
-
+	
+    <item
+        android:id="@+id/action_chooseCustomColor"
+        android:orderInCategory="100"
+        android:showAsAction="always"
+        android:title="@string/action_chooseCustomColor"/>
+    
 </menu>

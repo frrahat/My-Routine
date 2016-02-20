@@ -7,12 +7,14 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.Date;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -20,6 +22,7 @@ import android.graphics.Rect;
 import android.graphics.Paint.Style;
 import android.os.Bundle;
 import android.os.Environment;
+import android.preference.PreferenceManager;
 import android.text.format.DateFormat;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -48,6 +51,8 @@ public class MainActivity extends Activity {
 	static final String[] days={"SAT","SUN","MON","TUE","WED","THU","FRI"};
 	static final String[] times={"8:00","9:00","10:00","11:00","12:00","02:00","4:00"};
 	
+	SharedPreferences sharedPrefs;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -65,6 +70,9 @@ public class MainActivity extends Activity {
         loadData();
 		dataNeedToBeSaved=false;
 		copyMode=pasteMode=false;
+		
+		sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
+		
 		drawView=new DrawView(this);
 		drawView.setBackgroundColor(Color.BLACK);
 		
@@ -76,6 +84,9 @@ public class MainActivity extends Activity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.main, menu);
+		if(!pasteMode){
+			menu.findItem(R.id.action_stopPaste).setVisible(false);
+		}
 		return true;
 	}
 
@@ -93,6 +104,7 @@ public class MainActivity extends Activity {
 		else if (id == R.id.action_stopPaste) {
 			showToast("Pasting stopped");
 			pasteMode=false;
+			invalidateOptionsMenu();
 			return true;
 		}
 		else if (id == R.id.action_clearData) {
@@ -100,7 +112,7 @@ public class MainActivity extends Activity {
 			return true;
 		}
 		else if (id == R.id.action_settings) {
-			showToast("Not available in this version");
+			this.startActivityForResult(SettingsActivity.start(this),0);
 			return true;
 		}
 		else if (id == R.id.action_exit) {
@@ -198,7 +210,7 @@ public class MainActivity extends Activity {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 	    super.onActivityResult(requestCode, resultCode, data);
 	    
-	    //settings activity request code was 0
+	    //settings activity, item edit activity request code was 0
 	    if(requestCode==0){
 	    	//Toast.makeText(this, "updating", Toast.LENGTH_SHORT).show();
 			drawView.postInvalidate();
@@ -231,6 +243,7 @@ public class MainActivity extends Activity {
 	    	box_width=width/total_timeGaps;
 	    	box_height=height/total_days;
 	    	
+	    	//initializing boxes
 	    	for(int day=0;day<total_days;day++)
 	    	{
 	    		int top_coord=day*box_height;
@@ -247,12 +260,17 @@ public class MainActivity extends Activity {
 		@Override
 	    public void onDraw(Canvas canvas) {
 	    	
+	    	int textSize=Integer.parseInt(sharedPrefs.getString("textSize", "12"));
+	    	int centeringXOffset=Integer.parseInt(sharedPrefs.getString("centeringXOffset", "25"));
+	    	int centeringYOffset=Integer.parseInt(sharedPrefs.getString("centeringYOffset", "20"));
+	    	int textLineGap=Integer.parseInt(sharedPrefs.getString("textLineGap", "15"));
 	    	//draw days
 	    	//Toast.makeText(getContext(), Boolean.toString(dataChanged), Toast.LENGTH_SHORT).show();
 	    	paint.setStrokeWidth(3);
 	    	paint.setColor(Color.RED);
 	    	paint.setStyle(Paint.Style.STROKE);
 	    	
+	    	//painting boxes
 	    	for(int day=0;day<total_days;day++)
 	    	{
 	    		for(int gap=0;gap<total_timeGaps;gap++)
@@ -266,11 +284,12 @@ public class MainActivity extends Activity {
 	    	paint.setAntiAlias(true);
 	    	paint.setSubpixelText(true);
 	    	paint.setStyle(Style.FILL);//for nice font
+	    	paint.setTextSize(textSize);
 	    	
 	    	Date date=new Date();
 			String today=DateFormat.format("E", date).toString();//generally of 3 chars
 	    	for(int day=0;day<total_days-1;day++){
-	    		int x=boxes[day+1][0].centerX()-20;
+	    		int x=boxes[day+1][0].centerX()-centeringXOffset+5;
 	    		int y=boxes[day+1][0].centerY();
 	    		
 	    		String dayName=days[day];
@@ -281,7 +300,7 @@ public class MainActivity extends Activity {
 	    	}
 	    	
 	    	for(int gap=0;gap<total_timeGaps-1;gap++){
-	    		int x=boxes[0][gap+1].centerX()-20;
+	    		int x=boxes[0][gap+1].centerX()-centeringXOffset+5;
 	    		int y=boxes[0][gap+1].centerY();
 	    		canvas.drawText(times[gap], x, y, paint);
 	    	}
@@ -290,8 +309,8 @@ public class MainActivity extends Activity {
 	    	{
 	    		for(int gap=1;gap<total_timeGaps;gap++)
 	    		{//TODO text position set nicely 
-	    			int x=boxes[day][gap].centerX()-25;
-	        		int y=boxes[day][gap].top+20;
+	    			int x=boxes[day][gap].centerX()-centeringXOffset;
+	        		int y=boxes[day][gap].top+centeringYOffset;
 	        		RoutineItem r=items[day][gap];
 	        		
 					if (r.getCourseID().length() != 0) {
@@ -300,9 +319,9 @@ public class MainActivity extends Activity {
 						paint.setColor(Color.BLACK);
 
 						canvas.drawText(r.getCourseID(), x, y, paint);
-						y += 15;
+						y += textLineGap;
 						canvas.drawText(r.getCourseName(), x, y, paint);
-						y += 15;
+						y += textLineGap;
 						canvas.drawText(r.getTeachers(), x, y, paint);
 					}
 	        				
@@ -332,6 +351,7 @@ public class MainActivity extends Activity {
 								copyMode=false;
 								pasteMode=true;
 								showToast("Copied.\nNow Touch Where To Paste.");
+								invalidateOptionsMenu();
 							}
 							else if(pasteMode){
 								//copiedRoutineItem can never be null

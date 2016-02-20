@@ -9,9 +9,11 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -25,6 +27,7 @@ public class ColorChooseActivity extends Activity {
 		setContentView(R.layout.activity_color_choose);
 		
 		colorListView = (ListView) findViewById(R.id.listViewColorList);
+				
 		final String[] colorNames=MyColors.getColorNames();
 		
 		BaseAdapter adapter = new BaseAdapter() {
@@ -89,9 +92,26 @@ public class ColorChooseActivity extends Activity {
 		// automatically handle clicks on the Home/Up button, so long
 		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
-		if (id == R.id.action_settings) {
+		if (id == R.id.action_chooseCustomColor) {
+			Intent intent=new Intent(ColorChooseActivity.this,CustomColorChooserActivity.class);
+			startActivityForResult(intent, CustomColorChooserActivity.CustomColorChooseReqCode);
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
+	}
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if(requestCode==CustomColorChooserActivity.CustomColorChooseReqCode && resultCode==RESULT_OK){
+			//get data
+	    	int colConstant=data.getIntExtra("color_constant", RoutineItem.defaultColorConstant);
+	    	
+	    	//return data
+			Intent resultIntent = new Intent();
+			resultIntent.putExtra("color_constant", colConstant);
+			setResult(Activity.RESULT_OK, resultIntent);
+			finish();
+		}
+		super.onActivityResult(requestCode, resultCode, data);
 	}
 }

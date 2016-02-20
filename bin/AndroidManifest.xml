@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.Rahat.myroutine"
-    android:versionCode="1"
-    android:versionName="1.0" >
+    android:versionCode="2"
+    android:versionName="1.1" >
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -28,13 +28,19 @@
         </activity>
         <activity
             android:name=".AddToListActivity"
-            android:label="@string/title_activity_add_to_list"
-            android:screenOrientation="landscape" >
+            android:label="@string/title_activity_add_to_list" >
         </activity>
         <activity
             android:name=".ColorChooseActivity"
-            android:screenOrientation="landscape"
             android:label="@string/title_activity_color_choose" >
+        </activity>
+        <activity
+            android:name=".CustomColorChooserActivity"
+            android:label="@string/title_activity_custom_color_chooser" >
+        </activity>
+        <activity
+            android:name=".SettingsActivity"
+            android:label="@string/title_activity_settings" >
         </activity>
     </application>
 

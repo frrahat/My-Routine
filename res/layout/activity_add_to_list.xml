@@ -14,21 +14,30 @@
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:paddingTop="@dimen/activity_vertical_margin"
-        tools:context="com.Rahat.myroutine.AddToListActivity" >
+        tools:context="com.Rahat.myroutine.AddToListActivity" 
+        android:background="@android:color/darker_gray">
 
         <Button
             android:id="@+id/buttonSave"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:text="Save" />
-
+            android:text="Save" 
+            android:textColor="@android:color/holo_orange_dark"
+            android:background="@android:color/black"/>
+	
+        <Space 
+            android:id="@+id/space1"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"/>
+        
         <TextView
             android:id="@+id/textViewCourseId"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Course ID"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            android:textAppearance="?android:attr/textAppearanceMedium" 
+            android:textColor="@android:color/holo_red_dark"/>
 
         <EditText
             android:id="@+id/editTextCourseId"
@@ -45,8 +54,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Course Name"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
-
+            android:textAppearance="?android:attr/textAppearanceMedium" 
+            android:textColor="@android:color/holo_red_dark"/>
+            
         <EditText
             android:id="@+id/editTextCourseName"
             android:layout_width="match_parent"
@@ -59,7 +69,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Teachers"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            android:textAppearance="?android:attr/textAppearanceMedium"             
+            android:textColor="@android:color/holo_red_dark"/>
+
 
         <EditText
             android:id="@+id/editTextTeachers"
@@ -67,6 +79,11 @@
             android:layout_height="wrap_content"
             android:hint="Enter Teachers' Names"
             android:ems="10" />
+        
+        <Space 
+            android:id="@+id/space2"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"/>
 
         <Button
             android:id="@+id/buttonChoose"
@@ -74,13 +91,20 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:text="Change Color..." />
+        
+        <Space 
+            android:id="@+id/space3"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"/>
 
         <Button
             android:id="@+id/buttonClear"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:text="Clear" />
+            android:text="  Clear Data  " 
+            android:textColor="@android:color/holo_orange_dark"
+            android:background="@android:color/black"/>
     </LinearLayout>
 
 </ScrollView>
