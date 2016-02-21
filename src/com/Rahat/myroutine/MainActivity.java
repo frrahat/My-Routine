@@ -8,10 +8,13 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.Date;
 
+import com.Rahat.myroutine.FileChooserDialog.OnFileChosenListener;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -36,8 +39,8 @@ import android.widget.Toast;
 
 public class MainActivity extends Activity {
 
-	private final String storageFolderName=".com.frrahat.MyRoutine";
-	private final String storageFileName="MyRoutineData.ser";
+	private static final String storageFolderName=".com.frrahat.MyRoutine";
+	public static final String storageFileName="MyRoutineData.ser";
 	private DrawView drawView;
 	static RoutineItem[][] items;
 	RoutineItem copiedRoutineItem;
@@ -52,6 +55,7 @@ public class MainActivity extends Activity {
 	static final String[] times={"8:00","9:00","10:00","11:00","12:00","02:00","4:00"};
 	
 	SharedPreferences sharedPrefs;
+	FileChooserDialog importFileChooserDialog;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -61,13 +65,26 @@ public class MainActivity extends Activity {
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 				WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		// ------------*/
-		File root = Environment.getExternalStorageDirectory();
-		File dir = new File(root.getAbsolutePath() + "/"+storageFolderName);
-        if(!dir.exists())
-        	dir.mkdirs();
-        storageFile = new File(dir, storageFileName);
 		
-        loadData();
+		File storageDir;
+		String state=Environment.getExternalStorageState();
+
+		if (Environment.MEDIA_MOUNTED.equals(state)) {// has writable external  storage
+			storageDir = new File(Environment.getExternalStorageDirectory(),
+					MainActivity.storageFolderName);
+		} else {
+			ContextWrapper contextWrapper = new ContextWrapper(
+					this.getApplicationContext());
+			storageDir = contextWrapper.getDir(MainActivity.storageFolderName,
+					Context.MODE_PRIVATE);
+		}
+		
+		if(!storageDir.exists()){
+			storageDir.mkdir();
+		}
+        storageFile = new File(storageDir, storageFileName);
+		
+        loadData(storageFile);
 		dataNeedToBeSaved=false;
 		copyMode=pasteMode=false;
 		
@@ -78,6 +95,16 @@ public class MainActivity extends Activity {
 		
 		setContentView(drawView);
 		//setContentView(R.layout.activity_main);
+		
+		importFileChooserDialog = new FileChooserDialog();
+		importFileChooserDialog.setOnFileChosenListener(new OnFileChosenListener() {	
+			@Override
+			public void onFileChosen(File file) {
+				loadData(file);
+				dataNeedToBeSaved=true;
+				drawView.postInvalidate();
+			}
+		});
 	}
 
 	@Override
@@ -99,24 +126,23 @@ public class MainActivity extends Activity {
 		if (id == R.id.action_copy) {
 			showToast("Touch on the item to copy");
 			copyMode=true;
-			return true;
 		}
 		else if (id == R.id.action_stopPaste) {
 			showToast("Pasting stopped");
 			pasteMode=false;
 			invalidateOptionsMenu();
-			return true;
 		}
 		else if (id == R.id.action_clearData) {
 			tryClearAllData();
-			return true;
 		}
 		else if (id == R.id.action_settings) {
 			this.startActivityForResult(SettingsActivity.start(this),0);
-			return true;
 		}
-		else if (id == R.id.action_exit) {
-			finish();
+		else if (id == R.id.action_exportData) {
+			exportData();
+		}
+		else if (id == R.id.action_importData) {
+			importData();
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
@@ -158,14 +184,14 @@ public class MainActivity extends Activity {
 		}
 	}
 	
-	private void loadData(){
+	private void loadData(File sourceFile){
 		Log.i("loading", "loadData() called");
 		items=new RoutineItem[DrawView.total_days][DrawView.total_timeGaps];
         
 		FileInputStream inputStream;
 		ObjectInputStream objectInputStream;
 		try {
-			inputStream = new FileInputStream(storageFile);
+			inputStream = new FileInputStream(sourceFile);
 			objectInputStream = new ObjectInputStream(inputStream);
 			
 			//objectOutStream.writeInt(DrawView.total_days*DrawView.total_timeGaps); // Save size first
@@ -187,6 +213,74 @@ public class MainActivity extends Activity {
 			resetRoutineItems();
 			e.printStackTrace();
 		}
+	}
+	
+	private void exportData(){
+		final File exportFile  = new File(Environment.getExternalStorageDirectory(),storageFileName);
+		Log.i("Exporting", "Exporting data to file : "+exportFile.getAbsolutePath());
+		
+		if(dataNeedToBeSaved){
+			new AlertDialog.Builder(this)
+		    .setTitle("Save Data Befor Exporting?")
+		    .setMessage(R.string.text_dataModified)
+		    .setPositiveButton("Save", new DialogInterface.OnClickListener() {
+		        public void onClick(DialogInterface dialog, int which) { 
+		            saveData();
+		            dataNeedToBeSaved=false;
+		            transferData(storageFile, exportFile);
+
+		        }
+		     })
+		    .setNegativeButton("Don't Save", new DialogInterface.OnClickListener() {
+		        public void onClick(DialogInterface dialog, int which) { 
+		            transferData(storageFile, exportFile);
+		        }
+		     })
+		    .setIcon(android.R.drawable.ic_dialog_alert)
+		     .show();
+		}
+		else{
+			transferData(storageFile, exportFile);
+		}
+	}
+	
+	private void transferData(File fromFile, File toFile){
+		FileInputStream inputStream;
+		ObjectInputStream objectInputStream;
+		
+		FileOutputStream outStream;
+		ObjectOutputStream objectOutStream;
+			
+		try {
+			inputStream = new FileInputStream(fromFile);
+			objectInputStream = new ObjectInputStream(inputStream);
+			
+			outStream = new FileOutputStream(toFile);
+			objectOutStream = new ObjectOutputStream(outStream);
+			
+			
+			for(int i=0;i<DrawView.total_days;i++){
+				for(int j=0;j<DrawView.total_timeGaps;j++){
+					RoutineItem item=(RoutineItem) objectInputStream.readObject();
+					objectOutStream.writeObject(item);
+				}
+			}
+			
+			objectInputStream.close();
+			objectOutStream.close();
+			
+			showToast("Done. Exported data file : "+toFile.getAbsolutePath());
+		} catch (IOException e) {
+			Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
+			e.printStackTrace();
+		}catch (ClassNotFoundException e) {
+			Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
+			e.printStackTrace();
+		}
+	}
+	
+	private void importData(){
+		importFileChooserDialog.show(getFragmentManager(), "fileChooserDialog");
 	}
 	
 	private void resetRoutineItems(){
@@ -264,21 +358,7 @@ public class MainActivity extends Activity {
 	    	int centeringXOffset=Integer.parseInt(sharedPrefs.getString("centeringXOffset", "25"));
 	    	int centeringYOffset=Integer.parseInt(sharedPrefs.getString("centeringYOffset", "20"));
 	    	int textLineGap=Integer.parseInt(sharedPrefs.getString("textLineGap", "15"));
-	    	//draw days
-	    	//Toast.makeText(getContext(), Boolean.toString(dataChanged), Toast.LENGTH_SHORT).show();
-	    	paint.setStrokeWidth(3);
-	    	paint.setColor(Color.RED);
-	    	paint.setStyle(Paint.Style.STROKE);
 	    	
-	    	//painting boxes
-	    	for(int day=0;day<total_days;day++)
-	    	{
-	    		for(int gap=0;gap<total_timeGaps;gap++)
-	    		{
-	    			canvas.drawRect(boxes[day][gap],paint);
-	    			//canvas.drawText("foo", left_coord, top_coord, paint);
-	    		}
-	    	}
 	    	
 	    	paint.setColor(Color.GREEN);
 	    	paint.setAntiAlias(true);
@@ -288,7 +368,12 @@ public class MainActivity extends Activity {
 	    	
 	    	Date date=new Date();
 			String today=DateFormat.format("E", date).toString();//generally of 3 chars
-	    	for(int day=0;day<total_days-1;day++){
+	    	
+			//drawing menu indicating Green circle
+			canvas.drawCircle(boxes[0][0].centerX(), boxes[0][0].centerY(), textSize, paint);
+			
+			//drawing days of week
+			for(int day=0;day<total_days-1;day++){
 	    		int x=boxes[day+1][0].centerX()-centeringXOffset+5;
 	    		int y=boxes[day+1][0].centerY();
 	    		
@@ -299,12 +384,14 @@ public class MainActivity extends Activity {
 	    		canvas.drawText(dayName, x, y, paint);
 	    	}
 	    	
+			//drawing times
 	    	for(int gap=0;gap<total_timeGaps-1;gap++){
 	    		int x=boxes[0][gap+1].centerX()-centeringXOffset+5;
 	    		int y=boxes[0][gap+1].centerY();
 	    		canvas.drawText(times[gap], x, y, paint);
 	    	}
 	    	
+	    	//drawing routine data
 	    	for(int day=1;day<total_days;day++)
 	    	{
 	    		for(int gap=1;gap<total_timeGaps;gap++)
@@ -329,6 +416,23 @@ public class MainActivity extends Activity {
 	    		}
 	    	}
 	    	
+	    	paint.setStrokeWidth(3);
+	    	paint.setColor(Color.RED);
+	    	paint.setStyle(Paint.Style.STROKE);
+	    	
+	    	//painting boxes
+	    	for(int day=0;day<total_days;day++)
+	    	{
+	    		for(int gap=0;gap<total_timeGaps;gap++)
+	    		{
+	    			canvas.drawRect(boxes[day][gap],paint);
+	    			//canvas.drawText("foo", left_coord, top_coord, paint);
+	    		}
+	    	}
+	    	
+	    	//drawing menu indicating Red circle
+			canvas.drawCircle(boxes[0][0].centerX(), boxes[0][0].centerY(), textSize-5, paint);
+	    	
 	    	setOnTouchListener(new OnTouchListener() {
 				
 				@Override
@@ -341,8 +445,13 @@ public class MainActivity extends Activity {
 						int box_y=(int) (x/box_width);//for landscape
 						int box_x=(int) (y/box_height);//for landscape
 						
-						if(box_x==0 || box_y==0)//in the day and time label position
+						if(box_x==0 || box_y==0){//in the day and time label position
+							if(box_x==box_y){//in box_X=box_Y=0
+								openOptionsMenu();
+								return true;
+							}
 							return true;
+						}
 						
 						else if(box_x<total_days && box_y<total_timeGaps)
 						{
@@ -401,7 +510,7 @@ public class MainActivity extends Activity {
 		new AlertDialog.Builder(this)
 		.setIcon(android.R.drawable.ic_dialog_alert)
 		.setTitle("Save Before Exit")
-		.setMessage("Some data have been changed. Do you want to save?")
+		.setMessage(R.string.text_dataModified)
 		.setPositiveButton("Save",
 				new DialogInterface.OnClickListener() {
 					@Override

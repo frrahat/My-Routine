@@ -27,9 +27,15 @@
         android:title="@string/action_settings"/>
     
     <item
-        android:id="@+id/action_exit"
+        android:id="@+id/action_exportData"
         android:orderInCategory="100"
         android:showAsAction="never"
-        android:title="@string/action_exit"/>
+        android:title="@string/action_exportData"/>
+    
+    <item
+        android:id="@+id/action_importData"
+        android:orderInCategory="100"
+        android:showAsAction="never"
+        android:title="@string/action_importData"/>
     
 </menu>
