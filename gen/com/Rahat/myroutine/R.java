@@ -58,14 +58,15 @@ public final class R {
     public static final class id {
         public static final int LinearLayout1=0x7f0b0000;
         public static final int LinearLayout2=0x7f0b0012;
-        public static final int action_about=0x7f0b0029;
-        public static final int action_chooseCustomColor=0x7f0b0023;
-        public static final int action_clearData=0x7f0b0026;
-        public static final int action_copy=0x7f0b0024;
-        public static final int action_exportData=0x7f0b0027;
-        public static final int action_importData=0x7f0b0028;
-        public static final int action_settings=0x7f0b0022;
-        public static final int action_stopPaste=0x7f0b0025;
+        public static final int action_about=0x7f0b002b;
+        public static final int action_chooseCustomColor=0x7f0b0025;
+        public static final int action_clearData=0x7f0b0028;
+        public static final int action_copy=0x7f0b0026;
+        public static final int action_exit=0x7f0b002c;
+        public static final int action_exportData=0x7f0b0029;
+        public static final int action_importData=0x7f0b002a;
+        public static final int action_settings=0x7f0b0024;
+        public static final int action_stopPaste=0x7f0b0027;
         public static final int buttonChoose=0x7f0b000e;
         public static final int buttonClear=0x7f0b0010;
         public static final int buttonSave=0x7f0b0005;
@@ -76,7 +77,8 @@ public final class R {
         public static final int editTextCourseName=0x7f0b000a;
         public static final int editTextForAbout=0x7f0b0003;
         public static final int editTextTeachers=0x7f0b000c;
-        public static final int imageView_fileBrowse=0x7f0b001f;
+        public static final int fileNameEditText=0x7f0b0020;
+        public static final int imageView_fileBrowse=0x7f0b0021;
         public static final int listViewColorList=0x7f0b0011;
         public static final int listView_file_names=0x7f0b001c;
         public static final int scrollView=0x7f0b0004;
@@ -89,14 +91,15 @@ public final class R {
         public static final int space3=0x7f0b000f;
         public static final int textViewAppName=0x7f0b0001;
         public static final int textViewBlue=0x7f0b0018;
-        public static final int textViewColorName=0x7f0b0021;
+        public static final int textViewColorName=0x7f0b0023;
         public static final int textViewCourseId=0x7f0b0007;
         public static final int textViewCourseName=0x7f0b0009;
         public static final int textViewGreen=0x7f0b0016;
+        public static final int textViewPicker=0x7f0b001f;
         public static final int textViewRed=0x7f0b0014;
         public static final int textViewTeachers=0x7f0b000b;
         public static final int textView_fileChooser=0x7f0b001b;
-        public static final int textView_fileName=0x7f0b0020;
+        public static final int textView_fileName=0x7f0b0022;
         public static final int view_colorView=0x7f0b0013;
     }
     public static final class integer {
@@ -114,8 +117,9 @@ public final class R {
         public static final int activity_custom_color_chooser=0x7f030003;
         public static final int activity_main=0x7f030004;
         public static final int dialog_file_chooser=0x7f030005;
-        public static final int file_chooser_list_item=0x7f030006;
-        public static final int list_item=0x7f030007;
+        public static final int dialog_file_name_picker=0x7f030006;
+        public static final int file_chooser_list_item=0x7f030007;
+        public static final int list_item=0x7f030008;
     }
     public static final class menu {
         public static final int about=0x7f0a0000;
@@ -129,24 +133,27 @@ public final class R {
         public static final int action_chooseCustomColor=0x7f070008;
         public static final int action_clearData=0x7f070004;
         public static final int action_copy=0x7f070002;
+        public static final int action_exit=0x7f07000a;
         public static final int action_exportData=0x7f070006;
         public static final int action_importData=0x7f070007;
         public static final int action_settings=0x7f070005;
         public static final int action_stopPaste=0x7f070003;
         public static final int app_name=0x7f070000;
-        public static final int buttonText_customColor=0x7f07000e;
-        public static final int centeringX_title=0x7f070013;
-        public static final int centeringY_title=0x7f070014;
+        public static final int buttonText_customColor=0x7f07000f;
+        public static final int centeringX_title=0x7f070014;
+        public static final int centeringY_title=0x7f070015;
+        public static final int fileNameHint=0x7f070018;
+        public static final int fileNamePickerTitle=0x7f070017;
         public static final int hello_world=0x7f070001;
-        public static final int textLineGap_title=0x7f070015;
-        public static final int text_dataModified=0x7f07000a;
-        public static final int text_size_title=0x7f070012;
-        public static final int title_activity_about=0x7f070011;
-        public static final int title_activity_add_to_list=0x7f07000c;
-        public static final int title_activity_color_choose=0x7f07000d;
-        public static final int title_activity_custom_color_chooser=0x7f07000f;
-        public static final int title_activity_settings=0x7f070010;
-        public static final int title_dialog_file_chooser=0x7f07000b;
+        public static final int textLineGap_title=0x7f070016;
+        public static final int text_dataModified=0x7f07000b;
+        public static final int text_size_title=0x7f070013;
+        public static final int title_activity_about=0x7f070012;
+        public static final int title_activity_add_to_list=0x7f07000d;
+        public static final int title_activity_color_choose=0x7f07000e;
+        public static final int title_activity_custom_color_chooser=0x7f070010;
+        public static final int title_activity_settings=0x7f070011;
+        public static final int title_dialog_file_chooser=0x7f07000c;
     }
     public static final class style {
         /** 

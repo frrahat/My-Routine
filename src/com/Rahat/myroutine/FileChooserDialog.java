@@ -178,7 +178,7 @@ public class FileChooserDialog extends DialogFragment {
 				if (file.getName().startsWith("."))
 					continue;
 
-				if (file.isDirectory() || MainActivity.storageFileName.equals(file.getName())){
+				if (file.isDirectory() || file.getName().endsWith(MainActivity.fileFormat)){
 
 					displayFileList.add(file);
 				}

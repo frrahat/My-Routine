@@ -9,6 +9,7 @@ import java.io.ObjectOutputStream;
 import java.util.Date;
 
 import com.Rahat.myroutine.FileChooserDialog.OnFileChosenListener;
+import com.Rahat.myroutine.FileNamePickerDialog.OnFileNamePickedListener;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -40,7 +41,8 @@ import android.widget.Toast;
 public class MainActivity extends Activity {
 
 	private final String StorageFolderName=".com.frrahat.MyRoutine";
-	public static final String storageFileName="MyRoutineData.ser";
+	public static final String fileFormat=".ser";
+	private final String StorageFileName="MyRoutineData"+fileFormat;
 	private final String ExportFolderName="Exported";
 	private DrawView drawView;
 	static RoutineItem[][] items;
@@ -57,6 +59,7 @@ public class MainActivity extends Activity {
 	
 	SharedPreferences sharedPrefs;
 	FileChooserDialog importFileChooserDialog;
+	FileNamePickerDialog fileNamePickerDialog;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +69,7 @@ public class MainActivity extends Activity {
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 				WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		// ------------*/
-        storageFile = new File(getStorageDir(this.StorageFolderName), storageFileName);
+        storageFile = new File(getStorageDir(this.StorageFolderName), this.StorageFileName);
 		
         loadData(storageFile);
 		dataNeedToBeSaved=false;
@@ -79,16 +82,6 @@ public class MainActivity extends Activity {
 		
 		setContentView(drawView);
 		//setContentView(R.layout.activity_main);
-		
-		importFileChooserDialog = new FileChooserDialog();
-		importFileChooserDialog.setOnFileChosenListener(new OnFileChosenListener() {	
-			@Override
-			public void onFileChosen(File file) {
-				loadData(file);
-				dataNeedToBeSaved=true;
-				drawView.postInvalidate();
-			}
-		});
 	}
 
 	private File getStorageDir(String storageDirName) {
@@ -151,6 +144,9 @@ public class MainActivity extends Activity {
 		else if (id == R.id.action_about){
 			Intent intent=new Intent(this,AboutActivity.class);
 			startActivity(intent);
+		}
+		else if (id == R.id.action_exit){
+			onBackPressed();
 		}
 		return super.onOptionsItemSelected(item);
 	}
@@ -222,10 +218,7 @@ public class MainActivity extends Activity {
 		}
 	}
 	
-	private void exportData(){
-		final File exportFile  = new File(getStorageDir(this.ExportFolderName),storageFileName);
-		Log.i("Exporting", "Exporting data to file : "+exportFile.getAbsolutePath());
-		
+	private void exportData(){			 
 		if(dataNeedToBeSaved){
 			new AlertDialog.Builder(this)
 		    .setTitle("Save Data Befor Exporting?")
@@ -234,21 +227,37 @@ public class MainActivity extends Activity {
 		        public void onClick(DialogInterface dialog, int which) { 
 		            saveData();
 		            dataNeedToBeSaved=false;
-		            transferData(storageFile, exportFile);
+		            pickFileNameAndTransferData();
 
 		        }
 		     })
 		    .setNegativeButton("Don't Save", new DialogInterface.OnClickListener() {
 		        public void onClick(DialogInterface dialog, int which) { 
-		            transferData(storageFile, exportFile);
+		            pickFileNameAndTransferData();
 		        }
 		     })
 		    .setIcon(android.R.drawable.ic_dialog_alert)
 		     .show();
 		}
 		else{
-			transferData(storageFile, exportFile);
+			pickFileNameAndTransferData();
 		}
+	}
+
+	private void pickFileNameAndTransferData() {
+		if(fileNamePickerDialog==null){
+			fileNamePickerDialog = new FileNamePickerDialog();
+			fileNamePickerDialog.setOnFileNamePickedListener(new OnFileNamePickedListener() {	
+				@Override
+				public void OnFileNamePicked(String fileName) {
+					String exportFileName=fileName+fileFormat;
+					File exportFile  = new File(getStorageDir(ExportFolderName),exportFileName);
+					Log.i("Exporting", "Exporting data to file : "+exportFile.getAbsolutePath());
+					transferData(storageFile,exportFile);
+				}
+			});
+		}
+		fileNamePickerDialog.show(getFragmentManager(), "namepicker");
 	}
 	
 	private void transferData(File fromFile, File toFile){
@@ -302,6 +311,17 @@ public class MainActivity extends Activity {
 	}
 	
 	private void importData(){
+		if(importFileChooserDialog==null){
+			importFileChooserDialog = new FileChooserDialog();
+			importFileChooserDialog.setOnFileChosenListener(new OnFileChosenListener() {	
+				@Override
+				public void onFileChosen(File file) {
+					loadData(file);
+					dataNeedToBeSaved=true;
+					drawView.postInvalidate();
+				}
+			});
+		}
 		importFileChooserDialog.show(getFragmentManager(), "fileChooserDialog");
 	}
 	
