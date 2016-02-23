@@ -10,19 +10,20 @@
     <string name="action_exportData">Export Data</string>
     <string name="action_importData">Import Data</string>
     <string name="action_chooseCustomColor">Custom Color</string>
+    <string name="action_about">About</string>
     <string name="text_dataModified">Some data have been changed. Do you want to save?</string>
     <string name="title_dialog_file_chooser">Choose File</string>
     <string name="title_activity_add_to_list">Edit</string>
     <string name="title_activity_color_choose">Choose Color</string>
     <string name="buttonText_customColor">Custom Color</string>
     <string name="title_activity_custom_color_chooser">Choose Custom Color</string>
-    <string name="title_activity_settings">Settings</string>
+    <string name="title_activity_settings">Settings</string>    
+    <string name="title_activity_about">About MyRoutine</string>
     <string name="text_size_title">Text Size</string>
     <string name="centeringX_title">Text CenteringX Offset</string>
     <string name="centeringY_title">Text CenteringY Offset</string>
     <string name="textLineGap_title">Text Line Gap</string>
-    
-    
+
     <string-array name="textSizeTextsArray">
 
         <!--
@@ -34,7 +35,7 @@
 	    <item >5</item>
         <item>6</item>
         <item>7</item>
-        <item>8</item>
+        <item>8</item>
         -->
         <item>9</item>
         <item>10</item>
@@ -57,8 +58,8 @@
         <item>27</item>
         <item>28</item>
         <item>29</item>
-        <item>30</item> 
-        <!--  
+        <item>30</item>
+        <!--
         <item>31</item>
         <item>32</item>
         <item>33</item>
@@ -78,10 +79,9 @@
         <item>47</item>
         <item>48</item>
         <item>49</item>
-        <item>50</item>
+        <item>50</item>
         -->
     </string-array>
-    
     <string-array name="centeringOffsetValueArray">
         <item>5</item>
         <item>6</item>
@@ -108,7 +108,7 @@
         <item>27</item>
         <item>28</item>
         <item>29</item>
-        <item>30</item>   
+        <item>30</item>
         <item>31</item>
         <item>32</item>
         <item>33</item>
@@ -130,7 +130,6 @@
         <item>49</item>
         <item>50</item>
     </string-array>
-    
     <string-array name="lineGapValueArray">
         <item>15</item>
         <item>16</item>

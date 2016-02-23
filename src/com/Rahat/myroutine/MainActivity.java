@@ -39,8 +39,9 @@ import android.widget.Toast;
 
 public class MainActivity extends Activity {
 
-	private static final String storageFolderName=".com.frrahat.MyRoutine";
+	private final String StorageFolderName=".com.frrahat.MyRoutine";
 	public static final String storageFileName="MyRoutineData.ser";
+	private final String ExportFolderName="Exported";
 	private DrawView drawView;
 	static RoutineItem[][] items;
 	RoutineItem copiedRoutineItem;
@@ -65,24 +66,7 @@ public class MainActivity extends Activity {
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 				WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		// ------------*/
-		
-		File storageDir;
-		String state=Environment.getExternalStorageState();
-
-		if (Environment.MEDIA_MOUNTED.equals(state)) {// has writable external  storage
-			storageDir = new File(Environment.getExternalStorageDirectory(),
-					MainActivity.storageFolderName);
-		} else {
-			ContextWrapper contextWrapper = new ContextWrapper(
-					this.getApplicationContext());
-			storageDir = contextWrapper.getDir(MainActivity.storageFolderName,
-					Context.MODE_PRIVATE);
-		}
-		
-		if(!storageDir.exists()){
-			storageDir.mkdir();
-		}
-        storageFile = new File(storageDir, storageFileName);
+        storageFile = new File(getStorageDir(this.StorageFolderName), storageFileName);
 		
         loadData(storageFile);
 		dataNeedToBeSaved=false;
@@ -105,6 +89,26 @@ public class MainActivity extends Activity {
 				drawView.postInvalidate();
 			}
 		});
+	}
+
+	private File getStorageDir(String storageDirName) {
+		File storageDir;
+		String state=Environment.getExternalStorageState();
+
+		if (Environment.MEDIA_MOUNTED.equals(state)) {// has writable external  storage
+			storageDir = new File(Environment.getExternalStorageDirectory(),
+					storageDirName);
+		} else {
+			ContextWrapper contextWrapper = new ContextWrapper(
+					this.getApplicationContext());
+			storageDir = contextWrapper.getDir(storageDirName,
+					Context.MODE_PRIVATE);
+		}
+		
+		if(!storageDir.exists()){
+			storageDir.mkdirs();
+		}
+		return storageDir;
 	}
 
 	@Override
@@ -143,7 +147,10 @@ public class MainActivity extends Activity {
 		}
 		else if (id == R.id.action_importData) {
 			importData();
-			return true;
+		}
+		else if (id == R.id.action_about){
+			Intent intent=new Intent(this,AboutActivity.class);
+			startActivity(intent);
 		}
 		return super.onOptionsItemSelected(item);
 	}
@@ -216,7 +223,7 @@ public class MainActivity extends Activity {
 	}
 	
 	private void exportData(){
-		final File exportFile  = new File(Environment.getExternalStorageDirectory(),storageFileName);
+		final File exportFile  = new File(getStorageDir(this.ExportFolderName),storageFileName);
 		Log.i("Exporting", "Exporting data to file : "+exportFile.getAbsolutePath());
 		
 		if(dataNeedToBeSaved){
@@ -269,7 +276,22 @@ public class MainActivity extends Activity {
 			objectInputStream.close();
 			objectOutStream.close();
 			
-			showToast("Done. Exported data file : "+toFile.getAbsolutePath());
+			//displaying the exported file info as dialog
+			new AlertDialog.Builder(this)
+		    .setTitle("Success")
+		    .setMessage("Exported data file :\n"+toFile.getAbsolutePath())
+		    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+		        public void onClick(DialogInterface dialog, int which) { 
+		            //do nothing
+		        }
+		     })
+		    .setNegativeButton("Back", new DialogInterface.OnClickListener() {
+		        public void onClick(DialogInterface dialog, int which) { 
+		            //do nothing
+		        }
+		     })
+		    .setIcon(android.R.drawable.ic_dialog_alert)
+		     .show();
 		} catch (IOException e) {
 			Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
 			e.printStackTrace();
