@@ -58,15 +58,16 @@ public final class R {
     public static final class id {
         public static final int LinearLayout1=0x7f0b0000;
         public static final int LinearLayout2=0x7f0b0012;
-        public static final int action_about=0x7f0b002b;
-        public static final int action_chooseCustomColor=0x7f0b0025;
-        public static final int action_clearData=0x7f0b0028;
-        public static final int action_copy=0x7f0b0026;
-        public static final int action_exit=0x7f0b002c;
-        public static final int action_exportData=0x7f0b0029;
-        public static final int action_importData=0x7f0b002a;
+        public static final int action_about=0x7f0b002c;
+        public static final int action_chooseCustomColor=0x7f0b0026;
+        public static final int action_clearData=0x7f0b0029;
+        public static final int action_copy=0x7f0b0027;
+        public static final int action_exit=0x7f0b002d;
+        public static final int action_exportData=0x7f0b002a;
+        public static final int action_importData=0x7f0b002b;
+        public static final int action_saveItem=0x7f0b0025;
         public static final int action_settings=0x7f0b0024;
-        public static final int action_stopPaste=0x7f0b0027;
+        public static final int action_stopPaste=0x7f0b0028;
         public static final int buttonChoose=0x7f0b000e;
         public static final int buttonClear=0x7f0b0010;
         public static final int buttonSave=0x7f0b0005;
@@ -136,24 +137,25 @@ public final class R {
         public static final int action_exit=0x7f07000a;
         public static final int action_exportData=0x7f070006;
         public static final int action_importData=0x7f070007;
+        public static final int action_saveItem=0x7f07000b;
         public static final int action_settings=0x7f070005;
         public static final int action_stopPaste=0x7f070003;
         public static final int app_name=0x7f070000;
-        public static final int buttonText_customColor=0x7f07000f;
-        public static final int centeringX_title=0x7f070014;
-        public static final int centeringY_title=0x7f070015;
-        public static final int fileNameHint=0x7f070018;
-        public static final int fileNamePickerTitle=0x7f070017;
+        public static final int buttonText_customColor=0x7f070010;
+        public static final int centeringX_title=0x7f070015;
+        public static final int centeringY_title=0x7f070016;
+        public static final int fileNameHint=0x7f070019;
+        public static final int fileNamePickerTitle=0x7f070018;
         public static final int hello_world=0x7f070001;
-        public static final int textLineGap_title=0x7f070016;
-        public static final int text_dataModified=0x7f07000b;
-        public static final int text_size_title=0x7f070013;
-        public static final int title_activity_about=0x7f070012;
-        public static final int title_activity_add_to_list=0x7f07000d;
-        public static final int title_activity_color_choose=0x7f07000e;
-        public static final int title_activity_custom_color_chooser=0x7f070010;
-        public static final int title_activity_settings=0x7f070011;
-        public static final int title_dialog_file_chooser=0x7f07000c;
+        public static final int textLineGap_title=0x7f070017;
+        public static final int text_dataModified=0x7f07000c;
+        public static final int text_size_title=0x7f070014;
+        public static final int title_activity_about=0x7f070013;
+        public static final int title_activity_add_to_list=0x7f07000e;
+        public static final int title_activity_color_choose=0x7f07000f;
+        public static final int title_activity_custom_color_chooser=0x7f070011;
+        public static final int title_activity_settings=0x7f070012;
+        public static final int title_dialog_file_chooser=0x7f07000d;
     }
     public static final class style {
         /** 

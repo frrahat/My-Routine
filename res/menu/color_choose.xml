@@ -5,7 +5,7 @@
     <item
         android:id="@+id/action_chooseCustomColor"
         android:orderInCategory="100"
-        android:showAsAction="always"
+        android:showAsAction="ifRoom"
         android:title="@string/action_chooseCustomColor"/>
     
 </menu>

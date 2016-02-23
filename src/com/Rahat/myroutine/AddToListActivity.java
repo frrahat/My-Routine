@@ -11,6 +11,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class AddToListActivity extends Activity {
 
@@ -21,6 +22,7 @@ public class AddToListActivity extends Activity {
 	String itemColorName;
 	
 	Intent intent;
+	int day,period;
 	
 	int buttonColorConstant;
 
@@ -29,11 +31,6 @@ public class AddToListActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		//Full Screen
-		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-				WindowManager.LayoutParams.FLAG_FULLSCREEN);
-		//------------*/
 		setContentView(R.layout.activity_add_to_list);
 		
 		intent=getIntent();
@@ -50,8 +47,8 @@ public class AddToListActivity extends Activity {
 		etCourseName=(EditText) findViewById(R.id.editTextCourseName);
 		etTeachers=(EditText) findViewById(R.id.editTextTeachers);
 		
-		final int day=intent.getIntExtra("day",0);
-		final int period=intent.getIntExtra("period", 0);
+		day=intent.getIntExtra("day",0);
+		period=intent.getIntExtra("period", 0);
 		
 		saveButton.setText("Save ("+
 				MainActivity.days[day-1]+","+MainActivity.times[period-1]+")");
@@ -60,24 +57,20 @@ public class AddToListActivity extends Activity {
 		
 		buttonColorConstant=item.getColorConstant();
 		colorChooseButton.setBackgroundColor(buttonColorConstant);
+
 		
 		etCourseId.setText(item.getCourseID());
 		etCourseName.setText(item.getCourseName());
 		etTeachers.setText(item.getTeachers());
 		
+		//sending cursor to end
+		etCourseId.setSelection(item.getCourseID().length());
+		
 		saveButton.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
-				item.setCourseID(etCourseId.getText().toString());
-				item.setCourseName(etCourseName.getText().toString());
-				item.setTeachers(etTeachers.getText().toString());
-				item.setColorConstant(buttonColorConstant);
-				
-				MainActivity.items[day][period]=item;
-				MainActivity.dataNeedToBeSaved=true;
-
-				finish();
+				saveItem();
 			}
 		});
 		
@@ -93,7 +86,7 @@ public class AddToListActivity extends Activity {
 				etCourseName.setText(item.getCourseName());
 				etTeachers.setText(item.getTeachers());
 				
-				//Toast.makeText(getBaseContext(), "Cleared", Toast.LENGTH_SHORT).show();
+				Toast.makeText(getBaseContext(), "Cleared", Toast.LENGTH_SHORT).show();
 			}
 		});
 		
@@ -127,13 +120,28 @@ public class AddToListActivity extends Activity {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		/*// Handle action bar item clicks here. The action bar will
+		// Handle action bar item clicks here. The action bar will
 		// automatically handle clicks on the Home/Up button, so long
 		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
-		if (id == R.id.action_settings) {
+		if (id == R.id.action_saveItem) {
+			saveItem();
 			return true;
-		}*/
+		}
 		return super.onOptionsItemSelected(item);
+	}
+	
+
+	private void saveItem() {
+		item.setCourseID(etCourseId.getText().toString());
+		item.setCourseName(etCourseName.getText().toString());
+		item.setTeachers(etTeachers.getText().toString());
+		item.setColorConstant(buttonColorConstant);
+		
+		MainActivity.items[day][period]=item;
+		MainActivity.dataNeedToBeSaved=true;
+
+		//Toast.makeText(getBaseContext(), "Saved", Toast.LENGTH_SHORT).show();
+		finish();
 	}
 }
