@@ -53,7 +53,7 @@ public class MainActivity extends Activity {
 	File storageFile;
 	
 	static final String[] days={"SAT","SUN","MON","TUE","WED","THU","FRI"};
-	static final String[] times={"8:00","9:00","10:00","11:00","12:00","02:00","4:00"};
+	static final String[] times={"8:00","9:00","10:00","11:00","12:00","02:00","04:00"};
 	
 	SharedPreferences sharedPrefs;
 	FileChooserDialog importFileChooserDialog;

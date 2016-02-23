@@ -18,7 +18,7 @@
     <string name="buttonText_customColor">Custom Color</string>
     <string name="title_activity_custom_color_chooser">Choose Custom Color</string>
     <string name="title_activity_settings">Settings</string>    
-    <string name="title_activity_about">About MyRoutine</string>
+    <string name="title_activity_about">About My Routine</string>
     <string name="text_size_title">Text Size</string>
     <string name="centeringX_title">Text CenteringX Offset</string>
     <string name="centeringY_title">Text CenteringY Offset</string>

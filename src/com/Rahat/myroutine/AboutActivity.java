@@ -15,10 +15,13 @@ public class AboutActivity extends Activity {
 		setContentView(R.layout.activity_about);
 		
 		EditText editText=(EditText) findViewById(R.id.editTextForAbout);
-		editText.setText("MyRoutine is a simple app that shows class routine in classical style. "
-				+ "\nSpecially designed for the student of BUET."
+		editText.setText("My Routine is a simple app that shows class routine in the classical style, "
+				+ "enables quick copy pasting of subjects and color changing for highlight. "
+				+ "Also enables exporting and importing routine data."
+				+ "\nSpecially designed for the students of BUET. "
+				+ "So, the time table is according to the BUET class schedule."
 				+ "\n\nThe source code of this app is open for all and can be found at : https://github.com/frrahat/My-Routine "
-				+ "\n\nFor feedback or bug fixing you may contact : fr.rahat@gmail.com"
+				+ "\n\nFor feedback or bug fixing please contact : fr.rahat@gmail.com"
 				+ "\nThank you for using this app.");
 		Linkify.addLinks(editText, Linkify.ALL);
 	}
